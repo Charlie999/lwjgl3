@@ -26,11 +26,12 @@ jobs:
           java-package: jdk
           architecture: x64
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.5.3#
+      - name: ant clean
+        run: ant clean
+        continue-on-error: true
       - name: Run all ant tasks
-        run: |
-          ant clean || true
-          ant all
+        run: ant all
       - name: Generate release
         env:
           LWJGL_BUILD_OFFLINE: yes
