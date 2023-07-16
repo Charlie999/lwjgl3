@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v3.5.3
       - name: Run all ant tasks
         run: |
-          ant clean
+          ant clean || true
           ant all
       - name: Generate release
         env:
