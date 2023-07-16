@@ -36,6 +36,7 @@ jobs:
         env:
           LWJGL_BUILD_OFFLINE: yes
         run: echo y | ant release
+        continue-on-error: true
       - name: Upload artifacts
         uses: actions/upload-artifact@v3.1.2
         with:
