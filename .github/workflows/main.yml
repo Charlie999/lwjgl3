@@ -1,0 +1,41 @@
+name: LWJGL Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bullseye
+    env:
+      ANT_OPTS: -Xmx4G
+      LWJGL_BUILD_TYPE: stable
+      LWJGL_BUILD_ARCH: x64
+    steps:
+      - name: Install packages
+        run: apt update -y && apt install ant build-essential git make libx11-dev libxt-dev libgtk-3-dev -y
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1.4.4
+        with:
+          java-version: 8
+          java-package: jdk
+          architecture: x64
+      - name: Checkout
+        uses: actions/checkout@v3.5.3
+      - name: Run all ant tasks
+        run: ant all
+      - name: Generate release
+        env:
+          LWJGL_BUILD_OFFLINE: yes
+        run: ant release
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: lwjgl-linux
+          path: bin/RELEASE
+          if_no_files_found: error
