@@ -28,14 +28,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.5.3
       - name: Run all ant tasks
-        run: ant all
+        run: |
+          ant clean
+          ant all
       - name: Generate release
         env:
           LWJGL_BUILD_OFFLINE: yes
-        run: ant release
+        run: echo y | ant release
       - name: Upload artifacts
         uses: actions/upload-artifact@v3.1.2
         with:
           name: lwjgl-linux
           path: bin/RELEASE
           if_no_files_found: error
+      
