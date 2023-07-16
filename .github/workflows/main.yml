@@ -26,7 +26,7 @@ jobs:
           java-package: jdk
           architecture: x64
       - name: Checkout
-        uses: actions/checkout@v3.5.3#
+        uses: actions/checkout@v3.5.3
       - name: ant clean
         run: ant clean
         continue-on-error: true
